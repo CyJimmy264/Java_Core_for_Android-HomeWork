@@ -12,12 +12,11 @@ public class TicTacToe {
     private static final Scanner SCANNER = new Scanner(System.in);
     private static final Random rand = new Random();
 
-    private static int fieldSizeX;
-    private static int fieldSizeY;
+    private static final int fieldSizeX = 5;
+    private static final int fieldSizeY = 5;
+    private static final int lineLength = 3;
 
     private static void initField() {
-        fieldSizeX = 3;
-        fieldSizeY = 3;
         field = new char[fieldSizeY][fieldSizeX];
 
         for (int y = 0; y < fieldSizeY; y++) {
@@ -68,8 +67,8 @@ public class TicTacToe {
         return x >= 0 && y >=0 && x < fieldSizeX && y < fieldSizeY;
     }
 
-    private static boolean checkGame(char dot, String s) {
-        if (checkWin(dot)) {
+    private static boolean checkGame(String s) {
+        if (nInLine(lineLength)) {
             System.out.println(s);
             return true;
         }
@@ -80,20 +79,52 @@ public class TicTacToe {
         return false;
     }
 
-    private static boolean checkWin(char c) {
-        // hor
-        if (field[0][0] == c && field[0][1] == c && field[0][2] == c) return true;
-        if (field[1][0] == c && field[1][1] == c && field[1][2] == c) return true;
-        if (field[2][0] == c && field[2][1] == c && field[2][2] == c) return true;
+    private static boolean nInLine(int n) {
+        int x; int y; int i;
 
-        // ver
-        if (field[0][0] == c && field[1][0] == c && field[2][0] == c) return true;
-        if (field[0][1] == c && field[1][1] == c && field[2][1] == c) return true;
-        if (field[0][2] == c && field[1][2] == c && field[2][2] == c) return true;
+        char dot;
 
-        // dia
-        if (field[0][0] == c && field[1][1] == c && field[2][2] == c) return true;
-        if (field[0][2] == c && field[1][1] == c && field[2][0] == c) return true;
+        for (y = 0; y < fieldSizeY; y++) {
+            for (x = 0; x < fieldSizeX; x++) {
+                dot = field[y][x];
+                if (dot != DOT_EMPTY) {
+                    // horizontal
+                    if (x + n <= fieldSizeX) {
+                        for (i = 1; i < n; i++) {
+                            if (field[y][x + i] != dot) break;
+                        }
+                        if (i == n) return true;
+                    }
+
+                    // vertical
+                    if (y + n <= fieldSizeY) {
+                        for (i = 1; i < n; i++) {
+                            if (field[y + i][x] != dot) break;
+                        }
+                        if (i == n) return true;
+                    }
+
+                    // diagonal
+                    if (x + n <= fieldSizeX && y + n <= fieldSizeY) {
+                        for (i = 1; i < n; i++) {
+                            if (field[y + i][x + i] != dot) break;
+                        }
+                        if (i == n) return true;
+                    }
+                }
+
+                // antidiagonal
+                if (x + n <= fieldSizeX && y + n <= fieldSizeY) {
+                    dot = field[y + n - 1][x];
+                    if (dot == DOT_EMPTY) continue;
+                    for (i = 1; i < n; i++) {
+                        if (field[y + n - 1 - i][x + i] != dot) break;
+                    }
+                    if (i == n) return true;
+                }
+            }
+        }
+
         return false;
     }
 
@@ -114,11 +145,11 @@ public class TicTacToe {
             while (true) {
                 humanTurn();
                 printField();
-                if (checkGame(DOT_X, "Human wins!!!")) break;
+                if (checkGame("Human wins!!!")) break;
 
                 aiTurn();
                 printField();
-                if (checkGame(DOT_O, "AI win!!!")) break;
+                if (checkGame("AI win!!!")) break;
             }
 
             System.out.println("Wanna play again?");
