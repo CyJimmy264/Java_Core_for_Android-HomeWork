@@ -27,4 +27,36 @@ public class Employee {
         System.out.printf("Employee: %s %s %s\nPosition: %s\nE-mail: %s\nPhone number: %s\nSalary: $%.2f\nAge: %d\n",
                 firstName, middleName, lastName, position, email, phoneNumber, salary, age);
     }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getMiddleName() {
+        return middleName;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public float getSalary() {
+        return salary;
+    }
+
+    public int getAge() {
+        return age;
+    }
 }

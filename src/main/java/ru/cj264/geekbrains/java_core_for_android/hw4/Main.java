@@ -1,7 +1,6 @@
 package ru.cj264.geekbrains.java_core_for_android.hw4;
 
 public class Main {
-
     // 1. Создать класс "Сотрудник" с полями: ФИО, должность, email, телефон, зарплата, возраст.
     // 2. Конструктор класса должен заполнять эти поля при создании объекта.
     // 3. Внутри класса «Сотрудник» написать метод, который выводит информацию об объекте в консоль.
@@ -25,5 +24,12 @@ public class Main {
                         "programmer", "dementyeva.simona@gmail.com", "+7(972)843-27-76",
                         888, 37),
         };
+
+        for (Employee employee : employees) {
+            if (employee.getAge() >= 40) {
+                employee.printInfo();
+                System.out.println();
+            }
+        }
     }
 }
