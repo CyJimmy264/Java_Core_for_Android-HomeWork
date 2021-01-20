@@ -10,4 +10,16 @@ public class Employee {
     private float salary;
     private int age;
 
+    public Employee(String firstName, String lastName, String middleName, String position,
+                    String email, String phoneNumber, float salary, int age)
+    {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.middleName = middleName;
+        this.position = position;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.salary = salary;
+        this.age = age;
+    }
 }
