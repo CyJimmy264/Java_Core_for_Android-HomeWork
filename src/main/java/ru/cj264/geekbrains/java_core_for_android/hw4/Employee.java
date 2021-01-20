@@ -22,4 +22,9 @@ public class Employee {
         this.salary = salary;
         this.age = age;
     }
+
+    public void printInfo() {
+        System.out.printf("Employee: %s %s %s\nPosition: %s\nE-mail: %s\nPhone number: %s\nSalary: $%.2f\nAge: %d\n",
+                firstName, middleName, lastName, position, email, phoneNumber, salary, age);
+    }
 }

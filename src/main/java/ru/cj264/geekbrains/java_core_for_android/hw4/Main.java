@@ -8,6 +8,8 @@ public class Main {
     // 4. Создать массив из 5 сотрудников.
     // 5. С помощью цикла вывести информацию только о сотрудниках старше 40 лет.
     public static void main(String[] args) {
-
+        Employee first = new Employee("Maksim", "Veynberg", "Evgen'evich",
+                "programmer", "mv@cj264.ru", "+7(908)252-33-66", 888, 36);
+        first.printInfo();
     }
 }
