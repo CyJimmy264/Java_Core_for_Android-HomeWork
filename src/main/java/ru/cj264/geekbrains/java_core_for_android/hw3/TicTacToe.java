@@ -10,12 +10,15 @@ public class TicTacToe {
     private static final char DOT_O = 'O';
     private static final char DOT_EMPTY = '.';
 
+    private static final char HUMAN_DOT = DOT_X;
+    private static final char AI_DOT = DOT_O;
+
     private static final Scanner SCANNER = new Scanner(System.in);
     private static final Random rand = new Random();
 
-    private static final int fieldSizeX = 3;
-    private static final int fieldSizeY = 3;
-    private static final int lineLength = 3;
+    private static final int fieldSizeX = 5;
+    private static final int fieldSizeY = 5;
+    private static final int lineLength = 4;
 
     private static long aiTimeFrom;
 
@@ -52,7 +55,7 @@ public class TicTacToe {
 
     private static void printSteps(int[][] steps) {
         System.out.print("   ");
-        for (int i = 1; i <= fieldSizeX; i++) {
+        for (int i = 1; i <= steps[0].length; i++) {
             System.out.printf("%3d", i);
         }
         System.out.println();
@@ -77,7 +80,7 @@ public class TicTacToe {
             y = SCANNER.nextInt() - 1;
         } while (!isCellEmpty(x, y) || !isCellValid(x, y));
 
-        field[y][x] = DOT_X;
+        field[y][x] = HUMAN_DOT;
     }
 
     private static char[][] deepCopy(char[][] matrix) {
@@ -181,7 +184,7 @@ public class TicTacToe {
         calculate:
         for (int y = 0; y < fieldSizeY; y++) {
             for (int x = 0; x < fieldSizeX; x++) {
-                if (System.nanoTime() - aiTimeFrom > 5_000_000_000L) {
+                if (System.nanoTime() - aiTimeFrom > 1_000_000_000L) {
                     aiX = -1;
                     aiY = -1;
                     break calculate;
@@ -213,8 +216,8 @@ public class TicTacToe {
 
     private static void aiTurn() {
         aiTimeFrom = System.nanoTime();
-        int[] aiTurnXY = aiCalculateTurn(DOT_O, deepCopy(field), new int[fieldSizeY][fieldSizeX], 1);
-        field[aiTurnXY[0]][aiTurnXY[1]] = DOT_O;
+        int[] aiTurnXY = aiCalculateTurn(AI_DOT, deepCopy(field), new int[fieldSizeY][fieldSizeX], 1);
+        field[aiTurnXY[0]][aiTurnXY[1]] = AI_DOT;
     }
 
     private static boolean isCellEmpty(int x, int y) {
@@ -307,10 +310,46 @@ public class TicTacToe {
         return true;
     }
 
+    // *По желанию! Написать метод, который принимает на вход 2 целых числа, например, x и y.
+    // Внутри метода создаётся целочисленный двумерный массив со сторонами х и у.
+    // Потом этот массив заполняется последовательно инкрементируемыми числами по спирали (или змейкой).
+    // То есть, в позиции [0,0] будет 1, в [0,1] 2 и так далее. Потом по достижении правой границы
+    // направление заполнения меняется на вертикальное и так далее.
+    // Так, что последний заполненный элемент будет посередине массива.
+    public static void snake() {
+        System.out.print("Введите x, y: ");
+        int x = SCANNER.nextInt();
+        int y = SCANNER.nextInt();
+
+        int[][] arr = new int[y][x];
+        int[][] directions = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+        int direction = 0;
+        int sx = 0; int sy = 0;
+        for (int i = 1; i <= x*y; i++) {
+            arr[sy][sx] = i;
+
+            if (sy + directions[direction][0] >= 0 && sy + directions[direction][0] < y &&
+                sx + directions[direction][1] >= 0 && sx + directions[direction][1] < x &&
+                arr[sy + directions[direction][0]][sx + directions[direction][1]] == 0) {
+                sy += directions[direction][0];
+                sx += directions[direction][1];
+            } else {
+                direction = Math.floorMod(direction + 1, 4);
+                sy += directions[direction][0];
+                sx += directions[direction][1];
+            }
+        }
+
+        printSteps(arr);
+    }
+
     public static void main(String[] args) {
         while (true) {
             initField();
             printField();
+
+//            aiTurn();
+//            printField();
 
             while (true) {
                 humanTurn();
@@ -328,5 +367,7 @@ public class TicTacToe {
                 break;
             }
         }
+
+        snake();
     }
 }
