@@ -144,6 +144,10 @@ public class TicTacToe {
         }
     }
 
+    private static int[] aiPreventAlmostLine(char aiDot, char[][] field, int inc) {
+        return new int[] {-1, -1};
+    }
+
     private static int[] aiPreventLine(char aiDot, char[][] field, int inc) {
         char opponentDot = aiDot == DOT_X ? DOT_O : DOT_X;
 
@@ -250,46 +254,26 @@ public class TicTacToe {
 
     private static boolean nInLine(char[][] field) {
         int x; int y; int i;
-        int n = lineLength;
+        int n = lineLength - 1;
         char dot;
+
+        int[][] directions = {{0, 1}, {1, 0}, {1, 1}, {-1, 1}};
 
         for (y = 0; y < fieldSizeY; y++) {
             for (x = 0; x < fieldSizeX; x++) {
                 dot = field[y][x];
+
                 if (dot != DOT_EMPTY) {
-                    // horizontal
-                    if (x + n <= fieldSizeX) {
-                        for (i = 1; i < n; i++) {
-                            if (field[y][x + i] != dot) break;
-                        }
-                        if (i == n) return true;
-                    }
+                    for (int[] direction : directions) {
+                        if (y + n * direction[0] >= 0 && y + n * direction[0] < fieldSizeY &&
+                            x + n * direction[1] < fieldSizeX) {
+                            for (i = 1; i <= n; i++) {
+                                if (field[y + direction[0] * i][x + direction[1] * i] != dot) break;
+                            }
 
-                    // vertical
-                    if (y + n <= fieldSizeY) {
-                        for (i = 1; i < n; i++) {
-                            if (field[y + i][x] != dot) break;
+                            if (i == lineLength) return true;
                         }
-                        if (i == n) return true;
                     }
-
-                    // diagonal
-                    if (x + n <= fieldSizeX && y + n <= fieldSizeY) {
-                        for (i = 1; i < n; i++) {
-                            if (field[y + i][x + i] != dot) break;
-                        }
-                        if (i == n) return true;
-                    }
-                }
-
-                // antidiagonal
-                if (x + n <= fieldSizeX && y + n <= fieldSizeY) {
-                    dot = field[y + n - 1][x];
-                    if (dot == DOT_EMPTY) continue;
-                    for (i = 1; i < n; i++) {
-                        if (field[y + n - 1 - i][x + i] != dot) break;
-                    }
-                    if (i == n) return true;
                 }
             }
         }
@@ -363,11 +347,12 @@ public class TicTacToe {
 
             System.out.println("Wanna play again?");
             if (!SCANNER.next().equals("y")){
-                SCANNER.close();
                 break;
             }
         }
 
         snake();
+
+        SCANNER.close();
     }
 }
