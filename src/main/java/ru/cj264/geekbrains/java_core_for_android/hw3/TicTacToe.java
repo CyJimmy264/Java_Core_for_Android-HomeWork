@@ -145,7 +145,44 @@ public class TicTacToe {
     }
 
     private static int[] aiPreventAlmostLine(char aiDot, char[][] field, int inc) {
-        return new int[] {-1, -1};
+        char opponentDot = aiDot == DOT_X ? DOT_O : DOT_X;
+
+        int x; int y; int i;
+        int n = lineLength - 1;
+        char dot;
+
+        int[][] directions = {{0, 1}, {1, 0}, {1, 1}, {-1, 1}};
+
+        int count;
+        int[] result = {-1, -1};
+
+        for (y = 0; y < fieldSizeY; y++) {
+            for (x = 0; x < fieldSizeX; x++) {
+                dot = field[y][x];
+
+                if (dot == opponentDot) {
+                    directions_for:
+                    for (int[] direction : directions) {
+                        if (y + n * direction[0] >= 0 && y + n * direction[0] < fieldSizeY &&
+                            x + n * direction[1] < fieldSizeX) {
+                            count = 1;
+
+                            for (i = 1; i <= n; i++) {
+                                if (field[y + direction[0] * i][x + direction[1] * i] == aiDot) continue directions_for;
+                                if (field[y + direction[0] * i][x + direction[1] * i] == opponentDot) count++;
+                                if (field[y + direction[0] * i][x + direction[1] * i] == DOT_EMPTY)
+                                    result = new int[] {y + direction[0] * i, x + direction[1] * i};
+                            }
+
+                            if (count == n) return result;
+                            result = new int[] {-1, -1};
+                        }
+                    }
+                }
+            }
+        }
+
+        return result;
     }
 
     private static int[] aiPreventLine(char aiDot, char[][] field, int inc) {
@@ -203,6 +240,11 @@ public class TicTacToe {
                     }
                 }
             }
+        }
+        if (aiY == -1) {
+            int[] preventXY = aiPreventAlmostLine(aiDot, field, inc);
+            aiY = preventXY[0];
+            aiX = preventXY[1];
         }
         if (aiY == -1) {
             int[] preventXY = aiPreventLine(aiDot, field, inc);
