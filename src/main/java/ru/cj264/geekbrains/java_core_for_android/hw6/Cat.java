@@ -38,10 +38,10 @@ public class Cat {
 
     public void eat(Plate plate) {
         if (plate.decreaseFood(appetite)) {
-            System.out.println("Cat ate for " + appetite);
+            System.out.println(name + " ate for " + appetite);
             satiety = true;
         } else
-            System.out.println("Cat didn't eat crumbs.");
+            System.out.println(name + " didn't eat crumbs.");
     }
 
     public String getName() {
@@ -74,5 +74,12 @@ public class Cat {
 
     public void setDamage(int damage) {
         this.damage = damage;
+    }
+
+    public void printSatiety() {
+        if (satiety)
+            System.out.println(name + " is well-fed!");
+        else
+            System.out.println(name + " is hungry!");
     }
 }

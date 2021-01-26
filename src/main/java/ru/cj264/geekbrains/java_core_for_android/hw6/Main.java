@@ -13,16 +13,33 @@ public class Main {
         // 4. Считаем, что если коту мало еды в тарелке, то он её просто не трогает,
         //    то есть не может быть наполовину сыт (это сделано для упрощения логики программы).
 
-        // 5. Создать массив котов и тарелку с едой, попросить всех котов покушать из этой тарелки и потом вывести информацию о сытости котов в консоль.
+        // 5. Создать массив котов и тарелку с едой, попросить всех котов покушать из этой тарелки
+        //    и потом вывести информацию о сытости котов в консоль.
+
         // 6. Добавить в тарелку метод, с помощью которого можно было бы добавлять еду в тарелку.
         classWorkExample();
     }
 
     private static void classWorkExample() {
-        Cat cat = new Cat("Barsik", 15);
+        Cat[] cats = {
+                new Cat("Barsik", 15),
+                new Cat("Murzik", 17),
+                new Cat("Musya", 12),
+                new Cat("Pusya", 13),
+                new Cat("Pushistik", 7),
+        };
+
         Plate plate = new Plate();
-        plate.putFood(25);
-        cat.eat(plate);
-        cat.eat(plate);
+        plate.putFood(55);
+
+        for (Cat cat : cats) {
+            cat.eat(plate);
+        }
+
+        System.out.println("\n"+ ("=".repeat(18)) +"\n");
+
+        for (Cat cat : cats) {
+            cat.printSatiety();
+        }
     }
 }
