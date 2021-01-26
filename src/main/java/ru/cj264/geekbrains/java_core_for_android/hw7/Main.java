@@ -13,21 +13,37 @@ public class Main {
         //    пройти этот набор препятствий.
 
         // 4. У препятствий есть длина (для дорожки) или высота (для стены), а участников ограничения на бег и прыжки.
-        //    Если участник не смог пройти одно из препятствий, то дальше по списку он препятствий не идет.
+        //    Если участник не смог пройти одно из препятствий, то дальше по списку препятствий он не идет.
 
         // 5. Напишите метод, на вход которого подаётся двумерный строковый массив размером 4х4. При подаче массива другого размера необходимо бросить исключение MyArraySizeException.
         // 6. Далее метод должен пройтись по всем элементам массива, преобразовать в int и просуммировать. Если в каком-то элементе массива преобразование не удалось (например, в ячейке лежит символ или текст вместо числа), должно быть брошено исключение MyArrayDataException с детализацией, в какой именно ячейке лежат неверные данные.
         // 7. В методе main() вызвать полученный метод, обработать возможные исключения MyArraySizeException и MyArrayDataException и вывести результат расчета.
 
-        Human human = new Human("Adam");
-        Cat cat = new Cat("Pushok");
-        Robot robot = new Robot("707");
 
-        Running[] runners = {human, cat, robot};
+        Runner[] runners = {
+            new Human("Adam", 60, 200),
+            new Cat("Pushok", 150, 100),
+            new Robot("707", 50, 400),
+        };
 
-        for (Running runner : runners) {
-            runner.run();
-            runner.jump();
+        TrackPart[] obstacleCourse = {
+            new Track(50),
+            new Barrier(20),
+            new Track(200),
+            new Barrier(40),
+            new Track(20),
+            new Barrier(55),
+            new Track(80),
+            new Barrier(49),
+            new Track(90),
+            new Barrier(55),
+            new Track(200),
+        };
+
+        for (TrackPart trackPart : obstacleCourse) {
+            for (Runner runner : runners) {
+                runner.pass(trackPart);
+            }
         }
     }
 }
