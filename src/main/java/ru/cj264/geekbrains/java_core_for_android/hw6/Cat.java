@@ -5,9 +5,19 @@ public class Cat {
     private int appetite;
     private int health;
     private int damage;
+    private boolean satiety = false;
+
+    public Cat(String name) {
+        this.name = name;
+    }
+
+    public Cat(String name, int appetite) {
+        this(name);
+        this.appetite = appetite;
+    }
 
     public Cat(String name, int health, int damage) {
-        this.name = name;
+        this(name);
         this.health = health;
         this.damage = damage;
     }
@@ -26,15 +36,11 @@ public class Cat {
         another.takeHit(this);
     }
 
-    public Cat(String name, int appetite) {
-        this.name = name;
-        this.appetite = appetite;
-    }
-
     public void eat(Plate plate) {
-        if (plate.decreaseFood(appetite))
+        if (plate.decreaseFood(appetite)) {
             System.out.println("Cat ate for " + appetite);
-        else
+            satiety = true;
+        } else
             System.out.println("Cat didn't eat crumbs.");
     }
 
