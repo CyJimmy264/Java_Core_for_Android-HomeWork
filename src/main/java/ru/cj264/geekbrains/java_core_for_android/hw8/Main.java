@@ -1,20 +1,48 @@
 package ru.cj264.geekbrains.java_core_for_android.hw8;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
+import java.nio.CharBuffer;
+import java.nio.charset.StandardCharsets;
 
 public class Main {
     public static void createTextFile(String filename, String text) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename)))
         {
             writer.write(text);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static String readFile(String filename) {
+        StringBuilder content = new StringBuilder();
+
+        try (
+                BufferedReader reader = new BufferedReader(
+                        new InputStreamReader(new FileInputStream(filename), StandardCharsets.UTF_8)
+                )
+        ) {
+            CharBuffer buf = CharBuffer.allocate(1024);
+            while(reader.read(buf) > 0){
+                buf.flip();
+                content.append(buf);
+                buf.clear();
+            }
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return content.toString();
+    }
+
+    public static void concatFiles(String file1, String file2, String newFile) {
+        String content = "";
+
+        content += readFile(file1);
+        content += readFile(file2);
+
+        createTextFile(newFile, content);
     }
 
     public static void main(String[] args) {
@@ -28,6 +56,8 @@ public class Main {
 
         // 2. Написать метод, «склеивающий» эти файлы, то есть вначале идет текст из первого файла,
         //    потом текст из второго.
+        concatFiles("sample1.txt", "sample2.txt", "sample_concat.txt");
+
         // 3. * Написать метод, который проверяет присутствует ли указанное пользователем слово в файле
         //    (работаем только с латиницей).
         // 4. ** Написать метод, проверяющий, есть ли указанное слово в папке
