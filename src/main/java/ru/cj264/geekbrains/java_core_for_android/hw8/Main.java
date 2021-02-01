@@ -3,6 +3,8 @@ package ru.cj264.geekbrains.java_core_for_android.hw8;
 import java.io.*;
 import java.nio.CharBuffer;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.*;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Scanner;
 
 public class Main {
@@ -61,6 +63,25 @@ public class Main {
         return false;
     }
 
+    public static boolean searchFileWithText(String sample) {
+        final boolean[] found = {false};
+        try {
+            Files.walkFileTree(Paths.get(""), new SimpleFileVisitor<Path>() {
+                @Override
+                public FileVisitResult visitFile(Path path, BasicFileAttributes attrs) {
+                    if (isFileContainsString(path.toString(), sample)) {
+                        found[0] = true;
+                        return FileVisitResult.TERMINATE;
+                    } else
+                        return FileVisitResult.CONTINUE;
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return found[0];
+    }
+
     public static void main(String[] args) {
         // 1. Создать 2 текстовых файла, примерно по 50-100 символов в каждом(особого значения не имеет);
         createTextFile("sample1.txt",
@@ -79,12 +100,19 @@ public class Main {
         System.out.print("Введите искомое слово: ");
         Scanner scanner = new Scanner(System.in);
         String word = scanner.nextLine();
+
         if (isFileContainsString("sample_concat.txt", word)) {
             System.out.printf("Слово \"%s\" присутствует в файле sample_concat.txt!\n", word);
         } else {
-            System.out.println("Нет найдено!");
+            System.out.println("Не найдено в файле :(");
         }
 
         // 4. ** Написать метод, проверяющий, есть ли указанное слово в папке
+        searchFileWithText(word);
+        if (searchFileWithText(word)) {
+            System.out.printf("Слово \"%s\" найдено в текущей директории!\n", word);
+        } else {
+            System.out.println("Не найдено в текущей директории :(");
+        }
     }
 }
