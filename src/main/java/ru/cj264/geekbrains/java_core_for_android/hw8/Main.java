@@ -3,6 +3,7 @@ package ru.cj264.geekbrains.java_core_for_android.hw8;
 import java.io.*;
 import java.nio.CharBuffer;
 import java.nio.charset.StandardCharsets;
+import java.util.Scanner;
 
 public class Main {
     public static void createTextFile(String filename, String text) {
@@ -45,6 +46,21 @@ public class Main {
         createTextFile(newFile, content);
     }
 
+    public static boolean isFileContainsString(String filename, String sample) {
+        try (
+                BufferedReader reader = new BufferedReader(new FileReader(filename))
+        ) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                if (line.contains(sample)) return true;
+            }
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public static void main(String[] args) {
         // 1. Создать 2 текстовых файла, примерно по 50-100 символов в каждом(особого значения не имеет);
         createTextFile("sample1.txt",
@@ -60,6 +76,15 @@ public class Main {
 
         // 3. * Написать метод, который проверяет присутствует ли указанное пользователем слово в файле
         //    (работаем только с латиницей).
+        System.out.print("Введите искомое слово: ");
+        Scanner scanner = new Scanner(System.in);
+        String word = scanner.nextLine();
+        if (isFileContainsString("sample_concat.txt", word)) {
+            System.out.printf("Слово \"%s\" присутствует в файле sample_concat.txt!\n", word);
+        } else {
+            System.out.println("Нет найдено!");
+        }
+
         // 4. ** Написать метод, проверяющий, есть ли указанное слово в папке
     }
 }
