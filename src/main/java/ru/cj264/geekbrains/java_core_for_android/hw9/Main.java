@@ -48,6 +48,14 @@ public class Main {
             catFromDB.read(statement);
             System.out.println(catFromDB);
 
+            if (catFromDB.delete(statement) == 1) {
+                System.out.println("Cat " + catFromDB.name + " has been deleted from DB!");
+            }
+
+            if (catFromDB.delete(statement) == 0) {
+                System.out.println("There is not cat " + catFromDB.name + " in DB!");
+            }
+
             close();
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
@@ -63,6 +71,7 @@ public class Main {
         // 3. Написать метод извлечения котов
 
         // 5. Метод удаления котов
+
         // 6. Метод изменения котов
         database();
     }

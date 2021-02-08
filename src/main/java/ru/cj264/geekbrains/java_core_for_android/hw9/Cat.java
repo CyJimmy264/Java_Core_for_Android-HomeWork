@@ -68,4 +68,10 @@ public class Cat {
             breed = rs.getString("Breed");
         }
     }
+
+    public int delete(Statement statement) throws SQLException {
+        return statement.executeUpdate(
+                String.format("DELETE FROM `Cats` WHERE `CatID` = %s;", id)
+        );
+    }
 }
