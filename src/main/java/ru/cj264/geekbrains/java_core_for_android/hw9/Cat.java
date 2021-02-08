@@ -12,6 +12,8 @@ public class Cat {
     String color;
     String breed;
 
+    Statement statement;
+
     public Cat(String name, LocalDate birthday, String color, String breed) {
         this.name = name;
         this.birthday = birthday;
@@ -33,7 +35,7 @@ public class Cat {
                 '}';
     }
 
-    public long create(Statement statement) throws SQLException {
+    public long create() throws SQLException {
         int affectedRows = statement.executeUpdate(
                 String.format("INSERT INTO `Cats` (`Name`, `Birthday`, `Color`, `Breed`) "+
                                 "VALUES ('%s', '%s', '%s', '%s');",
@@ -56,7 +58,7 @@ public class Cat {
         return id;
     }
 
-    public void read(Statement statement) throws SQLException {
+    public void read() throws SQLException {
         ResultSet rs = statement.executeQuery(
                 String.format("SELECT * FROM `Cats` WHERE `CatID` = %s;", id)
         );
@@ -69,9 +71,20 @@ public class Cat {
         }
     }
 
-    public int delete(Statement statement) throws SQLException {
+    public int delete() throws SQLException {
         return statement.executeUpdate(
                 String.format("DELETE FROM `Cats` WHERE `CatID` = %s;", id)
         );
+    }
+
+    public int setBirthday(LocalDate birthday) throws SQLException {
+        this.birthday = birthday;
+        return statement.executeUpdate(
+                String.format("UPDATE `Cats` SET `Birthday` = '%s' WHERE `CatID` = %s;", birthday, id)
+        );
+    }
+
+    public void setStatement(Statement statement) {
+        this.statement = statement;
     }
 }

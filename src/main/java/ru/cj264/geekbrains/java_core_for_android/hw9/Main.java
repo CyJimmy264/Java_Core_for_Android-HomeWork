@@ -40,21 +40,36 @@ public class Main {
 
             Cat cat = new Cat("Barsik", LocalDate.of(2007, 11, 13),
                     "white and black", "siamese");
+            cat.setStatement(statement);
 
-            long catId = cat.create(statement);
+            long catId = cat.create();
             System.out.println("Cat record with id " + catId + " created");
 
             Cat catFromDB = new Cat(1);
-            catFromDB.read(statement);
+            catFromDB.setStatement(statement);
+            catFromDB.read();
             System.out.println(catFromDB);
 
-            if (catFromDB.delete(statement) == 1) {
+            if (catFromDB.delete() == 1) {
                 System.out.println("Cat " + catFromDB.name + " has been deleted from DB!");
             }
 
-            if (catFromDB.delete(statement) == 0) {
+            if (catFromDB.delete() == 0) {
                 System.out.println("There is not cat " + catFromDB.name + " in DB!");
             }
+
+            catId = catFromDB.create();
+            System.out.println("Cat record with id " + catId + " created");
+
+            int updated = catFromDB.setBirthday(LocalDate.of(2007, 11, 14));
+            if (updated == 1) {
+                System.out.println("Cat " + catFromDB.name + " has been updated to DB!");
+            }
+
+            Cat catUpdated = new Cat(2);
+            catUpdated.setStatement(statement);
+            catUpdated.read();
+            System.out.println(catUpdated);
 
             close();
         } catch (ClassNotFoundException | SQLException e) {
