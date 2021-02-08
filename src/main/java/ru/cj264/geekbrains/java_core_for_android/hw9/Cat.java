@@ -19,6 +19,10 @@ public class Cat {
         this.breed = breed;
     }
 
+    public Cat(long id) {
+        this.id = id;
+    }
+
     @Override
     public String toString() {
         return "Cat{" +
@@ -50,5 +54,18 @@ public class Cat {
         }
 
         return id;
+    }
+
+    public void read(Statement statement) throws SQLException {
+        ResultSet rs = statement.executeQuery(
+                String.format("SELECT * FROM `Cats` WHERE `CatID` = %s;", id)
+        );
+
+        while (rs.next()) {
+            name = rs.getString("Name");
+            birthday = LocalDate.parse(rs.getString("Birthday"));
+            color = rs.getString("Color");
+            breed = rs.getString("Breed");
+        }
     }
 }

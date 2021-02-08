@@ -44,6 +44,10 @@ public class Main {
             long catId = cat.create(statement);
             System.out.println("Cat record with id " + catId + " created");
 
+            Cat catFromDB = new Cat(1);
+            catFromDB.read(statement);
+            System.out.println(catFromDB);
+
             close();
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
@@ -57,6 +61,7 @@ public class Main {
         // 4. Метод добавления котов
 
         // 3. Написать метод извлечения котов
+
         // 5. Метод удаления котов
         // 6. Метод изменения котов
         database();
