@@ -2,13 +2,43 @@ package ru.cj264.geekbrains.java_core_for_android.hw10;
 
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Main {
     public static void main(String[] args) {
         // 1. Создать массив с набором слов (10-20 слов, должны встречаться повторяющиеся).
         // Найти и вывести список уникальных слов, из которых состоит массив (дубликаты не считаем).
         // Посчитать, сколько раз встречается каждое слово.
+
+        String[] words = {
+            "создать", "массив", "с", "набором", "слов", "слов", "должны", "встречаться", "дубликаты",
+            "найти", "вывести", "список", "уникальных", "слов", "из", "которых", "состоит", "массив", "дубликаты",
+        };
+
+        HashMap<String, Integer> dict = new HashMap<>();
+
+        Arrays.stream(words).forEach(w -> {
+                dict.merge(w, 1, Integer::sum);
+        });
+
+        System.out.println("Список уникальных слов:");
+        System.out.println(
+                dict.entrySet().stream()
+                        .filter(e -> e.getValue().equals(1))
+                        .map(Map.Entry::getKey)
+                        .sorted().collect(Collectors.toList())
+        );
+
+        System.out.println("Често встречаемые слова:");
+        LinkedHashMap<String, Integer> sortedDict =
+                dict.entrySet().stream()
+                        .sorted(Map.Entry.<String, Integer>comparingByValue().reversed()
+                                .thenComparing(Map.Entry.comparingByKey()))
+                        .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
+                                (oldValue, newValue) -> oldValue, LinkedHashMap::new));
+        System.out.println(sortedDict);
 
         // 2. Написать простой класс Телефонный Справочник, который хранит в себе список фамилий и телефонных номеров.
 
