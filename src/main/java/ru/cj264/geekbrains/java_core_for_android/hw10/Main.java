@@ -51,5 +51,15 @@ public class Main {
         // Желательно не добавлять лишний функционал (дополнительные поля (имя, отчество, адрес), взаимодействие с
         // пользователем через консоль и т.д). Консоль использовать только для вывода результатов проверки телефонного
         // справочника.
+
+        PhoneBook book = new PhoneBook();
+        book.add("Johnson", "+195654722");
+        book.add("Johnson", "+154715566577");
+        book.add("Johnson", "+13214564");
+        book.add("Anderson", "+100021455");
+
+        System.out.println("\nPhone book");
+        System.out.println("Johnson phone: " + book.get("Johnson"));
+        System.out.println("Anderson phone: " + book.get("Anderson"));
     }
 }
