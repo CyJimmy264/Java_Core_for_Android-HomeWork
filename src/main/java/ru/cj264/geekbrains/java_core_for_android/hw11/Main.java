@@ -36,23 +36,20 @@ public class Main {
 
         // g. Не забываем про метод добавления фрукта в коробку.
 
-        Box apples = new Box(
-                new Apple(),
+        Box<Apple> apples = new Box<>(
                 new Apple(),
                 new Apple(),
                 new Apple()
         );
 
-        Box oranges = new Box(
-                new Orange(),
-                new Orange(),
-                new Orange(),
+        Box<Orange> oranges = new Box<>(
                 new Orange(),
                 new Orange()
         );
 
         System.out.println("Apples box weight: " + apples.getWeight());
         System.out.println("Oranges box weight: " + oranges.getWeight());
+        System.out.println("Compare weights: " + apples.compare(oranges));
     }
 
     private static void step2() {
@@ -60,8 +57,8 @@ public class Main {
         int[] ints = {1, 2, 3, 4, 5};
         String[] strings = {"A", "B", "C", "D", "E"};
 
-        ArrayList alInts = arrayToArrayList(ArrayUtils.toObject(ints));
-        ArrayList alStrings = arrayToArrayList(strings);
+        ArrayList<Integer> alInts = arrayToArrayList(ArrayUtils.toObject(ints));
+        ArrayList<String> alStrings = arrayToArrayList(strings);
 
         System.out.println(alInts);
         System.out.println(alStrings);
