@@ -35,6 +35,24 @@ public class Main {
         //    в текущей коробке фруктов не остается, а в другую перекидываются объекты, которые были в первой;
 
         // g. Не забываем про метод добавления фрукта в коробку.
+
+        Box apples = new Box(
+                new Apple(),
+                new Apple(),
+                new Apple(),
+                new Apple()
+        );
+
+        Box oranges = new Box(
+                new Orange(),
+                new Orange(),
+                new Orange(),
+                new Orange(),
+                new Orange()
+        );
+
+        System.out.println("Apples box weight: " + apples.getWeight());
+        System.out.println("Oranges box weight: " + oranges.getWeight());
     }
 
     private static void step2() {
