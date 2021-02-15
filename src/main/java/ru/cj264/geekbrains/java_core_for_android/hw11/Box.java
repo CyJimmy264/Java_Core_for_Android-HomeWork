@@ -33,4 +33,9 @@ public class Box<T extends Fruit> {
         box.fruits.addAll(fruits);
         fruits.clear();
     }
+
+    @SafeVarargs
+    public final void add(T... fruits) {
+        this.fruits.addAll(Arrays.asList(fruits));
+    }
 }

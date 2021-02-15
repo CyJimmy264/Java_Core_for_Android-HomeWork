@@ -57,6 +57,10 @@ public class Main {
         appleBox1.move(appleBox2);
         System.out.println("Apple box 1 weight: " + appleBox1.getWeight());
         System.out.println("Apple box 2 weight: " + appleBox2.getWeight());
+//        oranges.move(appleBox2); // нельзя
+
+        appleBox1.add(new Apple());
+        System.out.println("Apple box 1 with new apple weight: " + appleBox1.getWeight());
     }
 
     private static void step2() {
