@@ -36,7 +36,7 @@ public class Main {
 
         // g. Не забываем про метод добавления фрукта в коробку.
 
-        Box<Apple> apples = new Box<>(
+        Box<Apple> appleBox1 = new Box<>(
                 new Apple(),
                 new Apple(),
                 new Apple()
@@ -47,9 +47,16 @@ public class Main {
                 new Orange()
         );
 
-        System.out.println("Apples box weight: " + apples.getWeight());
+        Box<Apple> appleBox2 = new Box<>(new Apple());
+
+        System.out.println("Apples box weight: " + appleBox1.getWeight());
         System.out.println("Oranges box weight: " + oranges.getWeight());
-        System.out.println("Compare weights: " + apples.compare(oranges));
+        System.out.println("Compare weights: " + appleBox1.compare(oranges));
+
+        System.out.println("Apple box 2 weight before move: " + appleBox2.getWeight());
+        appleBox1.move(appleBox2);
+        System.out.println("Apple box 1 weight: " + appleBox1.getWeight());
+        System.out.println("Apple box 2 weight: " + appleBox2.getWeight());
     }
 
     private static void step2() {

@@ -1,14 +1,14 @@
 package ru.cj264.geekbrains.java_core_for_android.hw11;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Box<T extends Fruit> {
     ArrayList<T> fruits = new ArrayList<>();
 
+    @SafeVarargs
     public Box(T ...fruits) {
-        for (T fruit : fruits) {
-            this.fruits.add(fruit);
-        }
+        this.fruits.addAll(Arrays.asList(fruits));
     }
 
     public double getWeight() {
@@ -27,5 +27,10 @@ public class Box<T extends Fruit> {
 
     public boolean compare(Box<? extends Fruit> box) {
         return getWeight() == box.getWeight();
+    }
+
+    public void move(Box<T> box) {
+        box.fruits.addAll(fruits);
+        fruits.clear();
     }
 }
