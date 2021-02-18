@@ -20,11 +20,11 @@ public class Main {
         float[] result1;
         float[] result2;
 
-        System.out.println("No threads:");
+        System.out.println("\nNo threads!\n");
         result1 = calculateSingle();
 
         for (int i = 1; i <= 8; i++) {
-            System.out.println("\n=================\n\nWith " + i + " threads!");
+            System.out.println("\n=================\n\nWith " + i + " threads!\n");
             result2 = calculateMultiThread(i);
             System.out.println("Results equal: " + Arrays.equals(result1, result2));
         }
@@ -59,7 +59,7 @@ public class Main {
         for (int i = 1; i <= threadsNumber; i++) {
             int currentLength = (i < threadsNumber) ? partLength : partLength + SIZE % threadsNumber;
             float[] part = new float[currentLength];
-            System.arraycopy(arr, 0, part, 0, currentLength);
+            System.arraycopy(arr, (i-1) * partLength, part, 0, currentLength);
             arrays.add(part);
         }
 
