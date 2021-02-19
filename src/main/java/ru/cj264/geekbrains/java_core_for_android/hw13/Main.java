@@ -25,11 +25,7 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("ВАЖНОЕ ОБЪЯВЛЕНИЕ >>> Подготовка!!!");
 
-        CyclicBarrier cyclicBarrier = new CyclicBarrier(CARS_COUNT + 1);
-        Semaphore semaphore = new Semaphore(CARS_COUNT / 2);
-        ArrayList<Integer> raceResults = new ArrayList<>();
-
-        Race race = new Race(raceResults, cyclicBarrier, new Road(60), new Tunnel(semaphore), new Road(40));
+        Race race = new Race(new Road(60), new Tunnel(), new Road(40));
 
         ArrayList<Thread> threads = new ArrayList<>();
 
@@ -41,7 +37,7 @@ public class Main {
         }
 
         try {
-            cyclicBarrier.await();
+            race.cyclicBarrier.await();
         } catch (InterruptedException | BrokenBarrierException e) {
             e.printStackTrace();
         }

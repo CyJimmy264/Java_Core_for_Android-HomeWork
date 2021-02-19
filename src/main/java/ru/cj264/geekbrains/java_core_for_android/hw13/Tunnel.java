@@ -3,10 +3,9 @@ package ru.cj264.geekbrains.java_core_for_android.hw13;
 import java.util.concurrent.Semaphore;
 
 public class Tunnel extends Stage {
-    Semaphore semaphore;
+    Semaphore semaphore = new Semaphore(Main.CARS_COUNT / 2);
 
-    public Tunnel(Semaphore semaphore) {
-        this.semaphore = semaphore;
+    public Tunnel() {
         this.length = 80;
         this.description = "Тоннель " + length + " метров";
     }
