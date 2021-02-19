@@ -27,28 +27,17 @@ public class Main {
 
         Race race = new Race(new Road(60), new Tunnel(), new Road(40));
 
-        ArrayList<Thread> threads = new ArrayList<>();
-
         for (int i = 0; i < CARS_COUNT; i++) {
             Car car = new Car(race, 10 + (int) (Math.random() * 10));
-            Thread thread = new Thread(car);
-            threads.add(thread);
-            thread.start();
+            new Thread(car).start();
         }
 
         try {
             race.cyclicBarrier.await();
+            System.out.println("ВАЖНОЕ ОБЪЯВЛЕНИЕ >>> Гонка началась!!!");
+            race.cyclicBarrier.await();
         } catch (InterruptedException | BrokenBarrierException e) {
             e.printStackTrace();
-        }
-        System.out.println("ВАЖНОЕ ОБЪЯВЛЕНИЕ >>> Гонка началась!!!");
-
-        for (Thread thread : threads) {
-            try {
-                thread.join();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
         }
 
         System.out.println("ВАЖНОЕ ОБЪЯВЛЕНИЕ >>> Гонка закончилась!!!");
