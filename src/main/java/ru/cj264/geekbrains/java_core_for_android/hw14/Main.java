@@ -9,8 +9,9 @@ public class Main {
 
     public static Integer[] afterLast4(Integer[] input) {
         int lastIndexOf4 = Arrays.asList(input).lastIndexOf(4);
-        Integer[] result = Arrays.copyOfRange(input, lastIndexOf4 + 1, input.length);
 
-        return result;
+        if (lastIndexOf4 == -1) throw new RuntimeException("There is no 4 in array!");
+
+        return Arrays.copyOfRange(input, lastIndexOf4 + 1, input.length);
     }
 }
