@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
-public class MainTest {
+public class AfterLast4Test {
     @ParameterizedTest(name = "{index}: the rest of ''{0}'' afterLast4 is {1}")
     @MethodSource("afterLast4_SamplesContaining4")
     void afterLast4_ShouldGiveTheRestOfTheArrayContaining4(Integer[] input, Integer[] output) {
