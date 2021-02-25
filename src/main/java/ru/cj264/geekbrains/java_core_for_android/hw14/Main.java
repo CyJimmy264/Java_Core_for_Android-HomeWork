@@ -1,9 +1,7 @@
 package ru.cj264.geekbrains.java_core_for_android.hw14;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Main {
     public static void main(String[] args) {
